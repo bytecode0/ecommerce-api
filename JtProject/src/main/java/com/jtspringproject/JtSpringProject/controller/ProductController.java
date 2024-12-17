@@ -8,38 +8,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/products")
-public class ProductRestController {
+public class ProductController {
 
     private final ProductService productService;
 
     private final CategoryService categoryService;
 
     @Autowired
-    public ProductRestController(ProductService productService, CategoryService categoryService) {
+    public ProductController(ProductService productService, CategoryService categoryService) {
         this.productService = productService;
         this.categoryService = categoryService;
     }
 
     @GetMapping
     public List<CategoryNode> getProductsByCategories() {
-        // Obtener todas las categorías
         List<Category> categories = categoryService.getCategories();
-
-        // Obtener todos los productos
         List<Product> products = productService.getProducts();
 
-        // Agrupar productos por categoría
         Map<Integer, List<Product>> productsByCategory = products.stream()
                 .collect(Collectors.groupingBy(product -> product.getCategory().getId()));
 
-        // Crear lista de nodos con categorías y sus productos
         return categories.stream()
                 .map(category -> new CategoryNode(
                         category.getId(),

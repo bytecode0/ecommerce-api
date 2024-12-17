@@ -8,10 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/api/cart/products")
@@ -70,6 +68,43 @@ public class CartController {
 
         cartService.deleteCart(cartProductOptional.get());
         return ResponseEntity.ok("Product removed from the cart.");
+    }
+
+
+    public static class AddToCartRequest {
+        private int count;
+        private int productId;
+
+        // Getters y Setters
+
+        public int getCount() {
+            return count;
+        }
+
+        public void setCount(int count) {
+            this.count = count;
+        }
+
+        public int getProductId() {
+            return productId;
+        }
+
+        public void setProductId(int productId) {
+            this.productId = productId;
+        }
+    }
+
+    public static class DeleteCartProductRequest {
+        private int productId;
+
+        // Getters y Setters
+        public int getProductId() {
+            return productId;
+        }
+
+        public void setProductId(int productId) {
+            this.productId = productId;
+        }
     }
 
 }
