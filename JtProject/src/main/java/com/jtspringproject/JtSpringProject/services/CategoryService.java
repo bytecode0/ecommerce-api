@@ -8,10 +8,8 @@ import org.springframework.stereotype.Service;
 import com.jtspringproject.JtSpringProject.dao.categoryDao;
 import com.jtspringproject.JtSpringProject.models.Category;
 
-import net.bytebuddy.dynamic.DynamicType.Builder.InnerTypeDefinition;
-
 @Service
-public class categoryService {
+public class CategoryService {
 	@Autowired
 	private categoryDao categoryDao;
 	

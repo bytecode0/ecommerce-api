@@ -9,7 +9,7 @@ import com.jtspringproject.JtSpringProject.dao.productDao;
 import com.jtspringproject.JtSpringProject.models.Product;
 
 @Service
-public class productService {
+public class ProductService {
 	@Autowired
 	private productDao productDao;
 	

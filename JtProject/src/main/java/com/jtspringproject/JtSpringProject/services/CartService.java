@@ -2,14 +2,13 @@ package com.jtspringproject.JtSpringProject.services;
 
 import com.jtspringproject.JtSpringProject.dao.cartDao;
 import com.jtspringproject.JtSpringProject.models.Cart;
-import com.jtspringproject.JtSpringProject.models.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class cartService {
+public class CartService {
     @Autowired
     private cartDao cartDao;
 
