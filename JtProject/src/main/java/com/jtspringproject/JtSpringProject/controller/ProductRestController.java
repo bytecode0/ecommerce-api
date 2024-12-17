@@ -37,7 +37,7 @@ public class ProductRestController {
 
         // Agrupar productos por categoría
         Map<Integer, List<Product>> productsByCategory = products.stream()
-                .collect(Collectors.groupingBy(Product::getId));
+                .collect(Collectors.groupingBy(product -> product.getCategory().getId()));
 
         // Crear lista de nodos con categorías y sus productos
         return categories.stream()
