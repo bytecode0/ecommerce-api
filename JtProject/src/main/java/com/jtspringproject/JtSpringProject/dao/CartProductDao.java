@@ -1,6 +1,5 @@
 package com.jtspringproject.JtSpringProject.dao;
 
-import com.jtspringproject.JtSpringProject.models.Cart;
 import com.jtspringproject.JtSpringProject.models.CartProduct;
 import com.jtspringproject.JtSpringProject.models.Product;
 import org.hibernate.SessionFactory;
@@ -11,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
-public class cartProductDao {
+public class CartProductDao {
     @Autowired
     private SessionFactory sessionFactory;
 

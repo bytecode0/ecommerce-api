@@ -56,6 +56,14 @@ INSERT INTO PRODUCT(description, image, name, price, quantity, weight, category_
                                                                                         ('Fresh and juicy', 'https://freepngimg.com/save/9557-apple-fruit-transparent/744x744', 'Apple', 3, 40, 76, 1),
                                                                                         ('Woops! There goes the eggs...', 'https://www.nicepng.com/png/full/813-8132637_poiata-bunicii-cracked-egg.png', 'Cracked Eggs', 1, 90, 43, 9);
 
+# create the cart-product table
+
+CREATE TABLE CART_PRODUCT (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    product_id INT NOT NULL,
+    count INT NOT NULL,
+    FOREIGN KEY (product_id) REFERENCES PRODUCT(id)
+);
 
 # create indexes
 CREATE INDEX FK7u438kvwr308xcwr4wbx36uiw
