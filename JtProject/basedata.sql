@@ -2,8 +2,8 @@
 SET SQL_MODE ='IGNORE_SPACE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 # create database and use it
-CREATE DATABASE IF NOT EXISTS ecommerce;
-USE ecommerce;
+CREATE DATABASE IF NOT EXISTS ecommerce-petshop-database;
+USE ecommerce-petshop-database;
 
 # create the category table
 CREATE TABLE IF NOT EXISTS CATEGORY(

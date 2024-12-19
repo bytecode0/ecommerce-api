@@ -19,14 +19,14 @@ import java.util.Map;
 
 @RestController // Para endpoints REST
 @RequestMapping("/api")
-public class AuthRestController {
+public class AuthController {
 
     private final AuthenticationManager authenticationManager;
 
     private final JwtTokenUtil jwtTokenUtil;
 
     @Autowired
-    public AuthRestController(
+    public AuthController(
             AuthenticationManager authenticationManager,
             JwtTokenUtil jwtTokenUtil
     ) {

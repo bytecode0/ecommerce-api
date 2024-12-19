@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController // Para endpoints REST
 @RequestMapping("/api")
-public class UserRestController {
+public class UserController {
 
     private final UserService userService;
 
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserRestController(UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserController(UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userService = userService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
