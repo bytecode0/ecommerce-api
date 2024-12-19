@@ -59,5 +59,6 @@ jobs:
         with:
           app-name: 'ecommerce-petshop'
           slot-name: 'Production'
+          working-directory: 'JtProject'
           package: '*.jar'
           
