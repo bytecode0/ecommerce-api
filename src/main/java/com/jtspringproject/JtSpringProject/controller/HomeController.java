@@ -1,12 +1,64 @@
 package com.jtspringproject.JtSpringProject.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.jtspringproject.JtSpringProject.models.Category;
+import com.jtspringproject.JtSpringProject.models.Product;
+import com.jtspringproject.JtSpringProject.services.CategoryService;
+import com.jtspringproject.JtSpringProject.services.ProductService;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api/v1")
 public class HomeController {
+
+    private final ProductService productService;
+
+    private final CategoryService categoryService;
+
+    @Autowired
+    public HomeController(ProductService productService, CategoryService categoryService) {
+        this.productService = productService;
+        this.categoryService = categoryService;
+    }
+
+    @GetMapping("/home")
+    public HomeResponse getProductsByCategories() {
+        List<Category> categories = categoryService.getCategories();
+        List<Product> products = productService.getProducts();
+
+        return new HomeResponse(
+            categories,
+            products
+        );
+    }
+
+    public static class HomeResponse {
+        private List<Category> categories;
+        private List<Product> newest_product;
+        
+        public HomeResponse(List<Category> categories, List<Product> newest_product) {
+            this.categories = categories;
+            this.newest_product = newest_product;
+        }
+
+        // Getters y Setters
+        public List<Category> getCategories() {
+            return categories;
+        }
+        public void setCategories(List<Category> categories) {
+            this.categories = categories;
+        }
+        public List<Product> getNewest_product() {
+            return newest_product;
+        }
+        public void setNewest_product(List<Product> newest_product) {
+            this.newest_product = newest_product;
+        }
+    }
 
     @GetMapping
     public String home() {
