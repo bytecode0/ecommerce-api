@@ -53,8 +53,9 @@ public class AuthController {
 
             // Devolver el token como respuesta
             Map<String, String> response = new HashMap<>();
-            response.put("token", jwtToken);
-            response.put("message", "Login successful");
+            response.put("result", jwtToken);
+            response.put("status", "true");
+            response.put("alert", null);
 
             return ResponseEntity.ok(response);
 
