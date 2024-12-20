@@ -13,9 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController // Para endpoints REST
 @RequestMapping("/api/v1")
@@ -35,7 +32,8 @@ public class AuthController {
     }
 
     @PostMapping("auth")
-    public ResponseEntity<?> auth(@RequestBody AuthRequest authRequest) {
+    public ResponseEntity<GenericResponse<String>> auth(@RequestBody AuthRequest authRequest) {
+        GenericResponse<String> response = new GenericResponse<String>();
         try {
             // Autenticar al usuario con Spring Security
             Authentication authentication = authenticationManager.authenticate(
@@ -52,16 +50,15 @@ public class AuthController {
             String jwtToken = jwtTokenUtil.generateToken(authRequest.getEmail());
 
             // Devolver el token como respuesta
-            Map<String, String> response = new HashMap<>();
-            response.put("result", jwtToken);
-            response.put("status", "true");
-            response.put("alert", null);
-
+            response.setResult(jwtToken);
+            response.setStatus(true);
             return ResponseEntity.ok(response);
 
         } catch (BadCredentialsException e) {
+            response.setResult("Invalid username or password");
+            response.setStatus(false);
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(Collections.singletonMap("error", "Invalid username or password"));
+                    .body(response);
         }
     }
 

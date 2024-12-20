@@ -26,22 +26,33 @@ public class HomeController {
     }
 
     @GetMapping("/home")
-    public HomeResponse getProductsByCategories() {
+    public GenericResponse<HomeResponse> getProductsByCategories() {
         List<Category> categories = categoryService.getCategories();
         List<Product> products = productService.getProducts();
 
-        return new HomeResponse(
+        GenericResponse<HomeResponse> response = new GenericResponse<HomeResponse>();
+        response.setResult(new HomeResponse(
             categories,
+            new FlashSale("", products),
+            products,
             products
-        );
+        ));
+        response.setStatus(true);
+        response.setAlert(new JAlertResponse("Welcome to VespaShop",  "The solution for your problems"));
+
+        return response;
     }
 
     public static class HomeResponse {
         private List<Category> categories;
+        private FlashSale flash_sale;
+        private List<Product> most_sale;
         private List<Product> newest_product;
         
-        public HomeResponse(List<Category> categories, List<Product> newest_product) {
+        public HomeResponse(List<Category> categories, FlashSale flash_sale, List<Product> most_sale, List<Product> newest_product) {
             this.categories = categories;
+            this.flash_sale = flash_sale;
+            this.most_sale = most_sale;
             this.newest_product = newest_product;
         }
 
@@ -58,6 +69,46 @@ public class HomeController {
         public void setNewest_product(List<Product> newest_product) {
             this.newest_product = newest_product;
         }
+        public List<Product> getMost_sale() {
+            return most_sale;
+        }
+        public void setMost_sale(List<Product> most_sale) {
+            this.most_sale = most_sale;
+        }
+        public FlashSale getFlash_sale() {
+            return flash_sale;
+        }
+
+        public void setFlash_sale(FlashSale flash_sale) {
+            this.flash_sale = flash_sale;
+        }
+    }
+
+    public static class FlashSale {
+        String expiredAt = "";
+        private List<Product> products;
+
+        public FlashSale(String expiredAt, List<Product> products) {
+            this.expiredAt = expiredAt;
+            this.products = products;
+        }
+
+        public String getExpiredAt() {
+            return expiredAt;
+        }
+
+        public void setExpiredAt(String expiredAt) {
+            this.expiredAt = expiredAt;
+        }
+
+        public List<Product> getProducts() {
+            return products;
+        }
+
+        public void setProducts(List<Product> products) {
+            this.products = products;
+        }
+
     }
 
     @GetMapping
