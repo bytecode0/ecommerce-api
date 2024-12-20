@@ -33,6 +33,10 @@ public class Product {
 	
 	private String description;
 
+	private int likes;
+
+	private Double rate;
+
 	public int getId() {
 		return id;
 	}
@@ -96,6 +100,22 @@ public class Product {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public int getLikes() {
+		return likes;
+	}
+
+	public void setLikes(int likes) {
+		this.likes = likes;
+	}
+
+	public Double getRate() {
+		return rate;
+	}
+
+	public void setRate(Double rate) {
+		this.rate = rate;
 	}
 	
 	@ManyToOne

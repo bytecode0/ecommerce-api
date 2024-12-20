@@ -15,9 +15,9 @@ public class JwtTokenUtil {
     private final long EXPIRATION_TIME = 86400000;   // 1 día en milisegundos
 
     // Generar token JWT
-    public String generateToken(String username) {
+    public String generateToken(String email) {
         return Jwts.builder()
-                .setSubject(username)
+                .setSubject(email)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY)

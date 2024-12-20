@@ -23,9 +23,9 @@ public class UserController {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    @PostMapping("/register")
+    @PostMapping("register")
     public ResponseEntity<String> registerUser(@RequestBody User user) {
-        boolean exists = this.userService.checkUserExists(user.getUsername());
+        boolean exists = this.userService.checkUserExists(user.getEmail());
 
         if (!exists) {
             String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
@@ -35,14 +35,37 @@ public class UserController {
             return ResponseEntity.ok("New user registered successfully");
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Username already taken: " + user.getUsername());
+                    .body("Email already used: " + user.getUsername());
         }
     }
 
-    @GetMapping("/profile")
+    @PutMapping("user")
+    public ResponseEntity<String> update(@RequestBody User user) {
+        boolean exists = this.userService.checkUserExists(user.getEmail());
+
+        if (exists) {
+            User currentUser = this.userService.getUserByEmail(user.getEmail());
+            if (!user.getName().isEmpty()) {
+                currentUser.setName(user.getName());
+            }
+            /*if (!user.getLastName().isEmpty()) {
+                currentUser.setLastName(user.getLastName());
+            }*/
+            if (!user.getAddress().isEmpty()) {
+                currentUser.setAddress(user.getAddress());
+            }
+            this.userService.addUser(currentUser);
+            return ResponseEntity.ok("New user registered successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Invalid user data: " + user.getEmail());
+        }
+    }
+
+    @GetMapping("profile")
     public ResponseEntity<User> getUserProfile() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = userService.getUserByUsername(username);
+        User user = userService.getUserByEmail(username);
         if (user != null) {
             return ResponseEntity.ok(user);
         } else {

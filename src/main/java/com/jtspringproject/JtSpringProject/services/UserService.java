@@ -5,14 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-
-import com.jtspringproject.JtSpringProject.dao.userDao;
+import com.jtspringproject.JtSpringProject.dao.UserDao;
 import com.jtspringproject.JtSpringProject.models.User;
 
 @Service
 public class UserService {
 	@Autowired
-	private userDao userDao;
+	private UserDao userDao;
 	
 	public List<User> getUsers() {
 		return this.userDao.getAllUser();
@@ -27,15 +26,15 @@ public class UserService {
 		}
 	}
 	
-	public User checkLogin(String username, String password) {
-		return this.userDao.getUser(username, password);
+	public User checkLogin(String email, String password) {
+		return this.userDao.getUser(email, password);
 	}
 
-	public boolean checkUserExists(String username) {
-		return this.userDao.userExists(username);
+	public boolean checkUserExists(String email) {
+		return this.userDao.userExists(email);
 	}
 
-	public User getUserByUsername(String username) {
-	        return userDao.getUserByUsername(username);
+	public User getUserByEmail(String email) {
+	        return userDao.getUserByEmail(email);
 	    }
 }

@@ -34,18 +34,22 @@ public class AuthController {
         this.jwtTokenUtil = jwtTokenUtil;
     }
 
-    @PostMapping("/auth")
+    @PostMapping("auth")
     public ResponseEntity<?> auth(@RequestBody AuthRequest authRequest) {
         try {
             // Autenticar al usuario con Spring Security
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
+                    new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword())
             );
+
+            if (!authentication.isAuthenticated()) {
+                throw new BadCredentialsException("Invalid username or password");
+            }
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             // Generar token JWT
-            String jwtToken = jwtTokenUtil.generateToken(authRequest.getUsername());
+            String jwtToken = jwtTokenUtil.generateToken(authRequest.getEmail());
 
             // Devolver el token como respuesta
             Map<String, String> response = new HashMap<>();
@@ -61,16 +65,16 @@ public class AuthController {
     }
 
     public static class AuthRequest {
-        private String username;
+        private String email;
         private String password;
 
         // Getters y Setters
-        public String getUsername() {
-            return username;
+        public String getEmail() {
+            return email;
         }
 
-        public void setUsername(String username) {
-            this.username = username;
+        public void setEmail(String email) {
+            this.email = email;
         }
 
         public String getPassword() {

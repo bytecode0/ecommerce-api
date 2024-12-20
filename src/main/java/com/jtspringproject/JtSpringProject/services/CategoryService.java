@@ -5,13 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.jtspringproject.JtSpringProject.dao.categoryDao;
+import com.jtspringproject.JtSpringProject.dao.CategoryDao;
 import com.jtspringproject.JtSpringProject.models.Category;
 
 @Service
 public class CategoryService {
 	@Autowired
-	private categoryDao categoryDao;
+	private CategoryDao categoryDao;
 	
 	public Category addCategory(String name) {
 		return this.categoryDao.addCategory(name);

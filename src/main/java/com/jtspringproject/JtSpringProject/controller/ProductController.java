@@ -5,15 +5,16 @@ import com.jtspringproject.JtSpringProject.models.Product;
 import com.jtspringproject.JtSpringProject.services.CategoryService;
 import com.jtspringproject.JtSpringProject.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/api/product")
 public class ProductController {
 
     private final ProductService productService;
@@ -27,54 +28,48 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<CategoryNode> getProductsByCategories() {
+    public Wishlist getProductsByCategories() {
         List<Category> categories = categoryService.getCategories();
         List<Product> products = productService.getProducts();
 
-        Map<Integer, List<Product>> productsByCategory = products.stream()
-                .collect(Collectors.groupingBy(product -> product.getCategory().getId()));
-
-        return categories.stream()
-                .map(category -> new CategoryNode(
-                        category.getId(),
-                        category.getName(),
-                        productsByCategory.getOrDefault(category.getId(), List.of())
-                ))
-                .collect(Collectors.toList());
+        return new Wishlist(
+            categories,
+            products
+        );
     }
 
-    public static class CategoryNode {
-        private int id;
-        private String name;
+    @GetMapping("/{id}")
+    public ResponseEntity<Product> getProductById(@PathVariable("id") int productId) {
+        Product product = productService.getProduct(productId);
+
+        if (product == null) {
+            // Retornar un error 404 si el producto no existe
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(null); // O puedes enviar un mensaje en el body si lo deseas
+        }
+
+        return ResponseEntity.ok(product);
+    }
+
+    public static class Wishlist {
+        private List<Category> categories;
         private List<Product> products;
 
-        public CategoryNode(int id, String name, List<Product> products) {
-            this.id = id;
-            this.name = name;
+        public Wishlist(List<Category> categories, List<Product> products) {
+            this.categories = categories;
             this.products = products;
         }
 
         // Getters y Setters
-        public int getId() {
-            return id;
+        public List<Category> getCategories() {
+            return categories;
         }
-
-        public void setId(int id) {
-            this.id = id;
+        public void setCategories(List<Category> categories) {
+            this.categories = categories;
         }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
         public List<Product> getProducts() {
             return products;
         }
-
         public void setProducts(List<Product> products) {
             this.products = products;
         }

@@ -1,10 +1,6 @@
 package com.jtspringproject.JtSpringProject.dao;
 
 import java.util.List;
-
-import javax.persistence.NoResultException;
-import javax.sound.midi.Soundbank;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -16,7 +12,7 @@ import com.jtspringproject.JtSpringProject.models.User;
 
 
 @Repository
-public class userDao {
+public class UserDao {
 	@Autowired
     private SessionFactory sessionFactory;
 	
@@ -36,14 +32,11 @@ public class userDao {
 		System.out.println("User added" + user.getId());
         return user;
 	}
-    
-//    public User checkLogin() {
-//    	this.sessionFactory.getCurrentSession().
-//    }
+
     @Transactional
-    public User getUser(String username,String password) {
-    	Query query = sessionFactory.getCurrentSession().createQuery("from CUSTOMER where username = :username");
-    	query.setParameter("username",username);
+    public User getUser(String email,String password) {
+    	Query query = sessionFactory.getCurrentSession().createQuery("from CUSTOMER where email = :email");
+    	query.setParameter("email", email);
     	
     	try {
 			User user = (User) query.getSingleResult();
@@ -62,16 +55,16 @@ public class userDao {
     }
 
 	@Transactional
-	public boolean userExists(String username) {
-		Query query = sessionFactory.getCurrentSession().createQuery("from CUSTOMER where username = :username");
-		query.setParameter("username",username);
+	public boolean userExists(String email) {
+		Query query = sessionFactory.getCurrentSession().createQuery("from CUSTOMER where email = :email");
+		query.setParameter("email", email);
 		return !query.getResultList().isEmpty();
 	}
 
 	@Transactional
-	public User getUserByUsername(String username) {
-	        Query<User> query = sessionFactory.getCurrentSession().createQuery("from CUSTOMER where username = :username", User.class);
-	        query.setParameter("username", username);
+	public User getUserByEmail(String email) {
+	        Query<User> query = sessionFactory.getCurrentSession().createQuery("from CUSTOMER where email = :email", User.class);
+	        query.setParameter("email", email);
 	        
 	        try {
 	            return query.getSingleResult();

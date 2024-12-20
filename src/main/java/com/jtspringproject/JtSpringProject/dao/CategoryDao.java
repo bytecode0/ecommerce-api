@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.jtspringproject.JtSpringProject.models.Category;
 
 @Repository
-public class categoryDao {
+public class CategoryDao {
 	@Autowired
 	private SessionFactory sessionFactory;
 

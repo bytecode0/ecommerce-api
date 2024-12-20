@@ -14,7 +14,9 @@ public class Category {
 	private int id;
 	
 	private String name;
-	
+
+	private String icon;
+
 	public int getId() {
 		return id;
 	}
@@ -29,6 +31,14 @@ public class Category {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
 	
 }

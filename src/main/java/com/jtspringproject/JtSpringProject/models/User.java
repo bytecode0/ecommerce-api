@@ -1,13 +1,10 @@
 package com.jtspringproject.JtSpringProject.models;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity(name="CUSTOMER")
@@ -17,19 +14,20 @@ public class User {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-
-	@Column(unique = true)
-	private String username;
 	
+	@Column(unique = true)
 	private String email;
+	
+	private String username;
 	
 	private String password;
 	
 	private String role;
 	
 	private String address;
-	
-	
+
+	private String name;
+
 	public int getId() {
 		return id;
 	}
@@ -77,7 +75,14 @@ public class User {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
-	 
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 
 }
