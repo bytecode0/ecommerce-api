@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController // Para endpoints REST
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;

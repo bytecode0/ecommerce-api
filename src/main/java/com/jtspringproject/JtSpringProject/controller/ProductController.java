@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/product")
+@RequestMapping("/api/v1")
 public class ProductController {
 
     private final ProductService productService;
@@ -27,7 +27,7 @@ public class ProductController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping
+    @GetMapping("/products")
     public Wishlist getProductsByCategories() {
         List<Category> categories = categoryService.getCategories();
         List<Product> products = productService.getProducts();
@@ -38,7 +38,7 @@ public class ProductController {
         );
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/product/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable("id") int productId) {
         Product product = productService.getProduct(productId);
 

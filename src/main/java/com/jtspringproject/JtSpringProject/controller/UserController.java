@@ -10,7 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController // Para endpoints REST
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 public class UserController {
 
     private final UserService userService;

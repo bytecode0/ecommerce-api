@@ -43,8 +43,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable()) // Deshabilita CSRF (para APIs REST)
                 .authorizeHttpRequests(auth -> auth
-                        .antMatchers("/api/auth/**", "/api/register/**").permitAll()
-                        .antMatchers("/api/**").authenticated()
+                        .antMatchers("/api/v1/auth/**", "/api/v1/register/**").permitAll()
+                        .antMatchers("/api/v1/**").authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)); // Stateless para JWT
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
