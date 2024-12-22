@@ -33,7 +33,7 @@ public class HomeController {
         GenericResponse<HomeResponse> response = new GenericResponse<HomeResponse>();
         response.setResult(new HomeResponse(
             categories,
-            new FlashSale("", products),
+            new FlashSale("2024-12-20T15:30:00Z", products),
             products,
             products
         ));

@@ -1,5 +1,7 @@
 package com.jtspringproject.JtSpringProject.controller;
 
+import com.jtspringproject.JtSpringProject.controller.HomeController.FlashSale;
+import com.jtspringproject.JtSpringProject.controller.HomeController.HomeResponse;
 import com.jtspringproject.JtSpringProject.models.Category;
 import com.jtspringproject.JtSpringProject.models.Product;
 import com.jtspringproject.JtSpringProject.services.CategoryService;
@@ -28,18 +30,23 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public Wishlist getProductsByCategories() {
+    public ResponseEntity<GenericResponse<Wishlist>> getProductsByCategories() {
         List<Category> categories = categoryService.getCategories();
         List<Product> products = productService.getProducts();
 
-        return new Wishlist(
+        Wishlist wishlist = new Wishlist(
             categories,
             products
         );
+        GenericResponse<Wishlist> response = new GenericResponse<Wishlist>();
+        response.setResult(wishlist);
+        response.setStatus(true);
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/product/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable("id") int productId) {
+    public ResponseEntity<GenericResponse<Product>> getProductById(@PathVariable("id") int productId) {
         Product product = productService.getProduct(productId);
 
         if (product == null) {
@@ -48,7 +55,10 @@ public class ProductController {
                     .body(null); // O puedes enviar un mensaje en el body si lo deseas
         }
 
-        return ResponseEntity.ok(product);
+        GenericResponse<Product> response = new GenericResponse<Product>();
+        response.setResult(product);
+        response.setStatus(true);
+        return ResponseEntity.ok(response);
     }
 
     public static class Wishlist {
