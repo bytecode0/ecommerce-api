@@ -1,7 +1,5 @@
 package com.jtspringproject.JtSpringProject.controller;
 
-import com.jtspringproject.JtSpringProject.controller.HomeController.FlashSale;
-import com.jtspringproject.JtSpringProject.controller.HomeController.HomeResponse;
 import com.jtspringproject.JtSpringProject.models.Category;
 import com.jtspringproject.JtSpringProject.models.Product;
 import com.jtspringproject.JtSpringProject.services.CategoryService;
@@ -30,15 +28,31 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public ResponseEntity<GenericResponse<Wishlist>> getProductsByCategories() {
+    public ResponseEntity<GenericResponse<ProductList>> getProductsByCategories() {
         List<Category> categories = categoryService.getCategories();
         List<Product> products = productService.getProducts();
 
-        Wishlist wishlist = new Wishlist(
+        ProductList wishlist = new ProductList(
             categories,
             products
         );
-        GenericResponse<Wishlist> response = new GenericResponse<Wishlist>();
+        GenericResponse<ProductList> response = new GenericResponse<ProductList>();
+        response.setResult(wishlist);
+        response.setStatus(true);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/product/wishlist")
+    public ResponseEntity<GenericResponse<ProductList>> getWishlist() {
+        List<Category> categories = categoryService.getCategories();
+        List<Product> products = productService.getProducts();
+
+        ProductList wishlist = new ProductList(
+            categories,
+            products
+        );
+        GenericResponse<ProductList> response = new GenericResponse<ProductList>();
         response.setResult(wishlist);
         response.setStatus(true);
 
@@ -61,11 +75,11 @@ public class ProductController {
         return ResponseEntity.ok(response);
     }
 
-    public static class Wishlist {
+    public static class ProductList {
         private List<Category> categories;
         private List<Product> products;
 
-        public Wishlist(List<Category> categories, List<Product> products) {
+        public ProductList(List<Category> categories, List<Product> products) {
             this.categories = categories;
             this.products = products;
         }
