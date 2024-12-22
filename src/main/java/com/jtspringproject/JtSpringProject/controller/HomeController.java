@@ -28,7 +28,7 @@ public class HomeController {
     @GetMapping("/home")
     public GenericResponse<HomeResponse> getProductsByCategories() {
         List<Category> categories = categoryService.getCategories();
-        List<Product> products = productService.getProducts();
+        List<Product> products = productService.getAllProducts();
 
         GenericResponse<HomeResponse> response = new GenericResponse<HomeResponse>();
         response.setResult(new HomeResponse(

@@ -52,4 +52,13 @@ public class ProductDao {
 		return false;
 	}
 
+	@Transactional
+	public List<Product> getProductsByCategoryId(int categoryId) {
+		String hql = "from PRODUCT p where p.category.id = :categoryId";
+		return this.sessionFactory.getCurrentSession()
+				.createQuery(hql, Product.class)
+				.setParameter("categoryId", categoryId)
+				.list();
+	}
+
 }
